@@ -42,12 +42,14 @@ public class ClosedSessionState extends SessionState {
             @Override
             public void operationComplete(ConnectFuture ioFuture) {
                 if (!ioFuture.isConnected() || ioFuture.isCanceled()) {
+                	minaSocketClient.connector.dispose();
                     minaSocketClient.session = null;
                     minaSocketClient.setSessionState(new ClosedSessionState(minaSocketClient));
                     if (minaSocketClient.mMinaSocketConnectionListener != null) {
                         minaSocketClient.mMinaSocketConnectionListener.onConnectionFailed(ioFuture.getSession().getId()+" "+ioFuture.getException().getMessage());
                     }
                 } else {
+                	
                     minaSocketClient.setSessionState(minaSocketClient.sessionStateFactory.newState(CONNECTED));
                     minaSocketClient.session = ioFuture.getSession();
                 }
