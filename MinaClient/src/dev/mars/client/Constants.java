@@ -10,27 +10,27 @@ public class Constants {
     public static final String secretKey = "cc175b9c0f1b6a831c399e269772661";
     public static final boolean DEBUG = true;
     //Socket服务器IP地址
-    public static final String REMOTE_IP = "192.168.10.15";
+    public static final String REMOTE_IP = "192.168.1.2";
     //Socket服务器端口号
-    public static final int PORT = 8888;
+    public static final int PORT = 8889;
     /*public static final String REMOTE_ID = "192.168.123.194";
     public static final int PORT = 6488;*/
 
     /**
      * READ_IDLE_TIMEOUT 设置会话读空闲时间
      */
-    public static final int READ_IDLE_TIMEOUT = 35; //{@link READ_IDLE_TIMEOUT}
+    public static final int READ_IDLE_TIMEOUT = 60; //{@link READ_IDLE_TIMEOUT}
 
     /**
      * WRITE_IDLE_TIMEOUT 设置会话写空闲时间，当会话写空闲发送心跳包给服务器
      */
-    public static final int WRITE_IDLE_TIMEOUT = 20;
+    public static final int WRITE_IDLE_TIMEOUT = 45;
     //WRITE_IDLE_TIMEOUT
 
     /**
      * 发生READ_IDLE_TIMES次 READ IDLE事件后关闭会话
      */
-    public static final int READ_IDLE_CLOSE_TIMES = 1;
+    public static final int READ_IDLE_CLOSE_TIMES = 2;
 
     /**
      * 第一次重连时间间隔

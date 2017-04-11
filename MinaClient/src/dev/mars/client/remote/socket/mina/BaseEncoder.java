@@ -57,7 +57,6 @@ public class BaseEncoder extends ProtocolEncoderAdapter{
 //		System.out.println("will send :"+buffer.toString());
 		buffer.flip(); 		
 		output.write(buffer); 
-		
 	}
 
 
