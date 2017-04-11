@@ -19,18 +19,18 @@ public class Constants {
     /**
      * READ_IDLE_TIMEOUT 设置会话读空闲时间
      */
-    public static final int READ_IDLE_TIMEOUT = 35; //{@link READ_IDLE_TIMEOUT}
+    public static final int READ_IDLE_TIMEOUT = 60; //{@link READ_IDLE_TIMEOUT}
 
     /**
      * WRITE_IDLE_TIMEOUT 设置会话写空闲时间，当会话写空闲发送心跳包给服务器
      */
-    public static final int WRITE_IDLE_TIMEOUT = 20;
+    public static final int WRITE_IDLE_TIMEOUT = 45;
     //WRITE_IDLE_TIMEOUT
 
     /**
      * 发生READ_IDLE_TIMES次 READ IDLE事件后关闭会话
      */
-    public static final int READ_IDLE_CLOSE_TIMES = 1;
+    public static final int READ_IDLE_CLOSE_TIMES = 2;
 
     /**
      * 第一次重连时间间隔

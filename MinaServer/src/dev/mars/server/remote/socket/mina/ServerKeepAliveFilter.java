@@ -1,6 +1,8 @@
 package dev.mars.server.remote.socket.mina;
 
 import org.apache.mina.core.filterchain.IoFilterAdapter;
+import org.apache.mina.core.future.IoFutureListener;
+import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.core.write.WriteRequest;
@@ -30,10 +32,20 @@ public class ServerKeepAliveFilter extends IoFilterAdapter{
     }
 
     @Override
-    public void messageReceived(NextFilter nextFilter, IoSession session, Object message) throws Exception {
+    public void messageReceived(NextFilter nextFilter, final IoSession session, Object message) throws Exception {
         if(keepAliveMessage.equals(message)){
             //如果收到服务器返回的心跳包，拦截该事件
-        	session.write(keepAliveMessage);
+        	WriteFuture writeFuture =session.write(keepAliveMessage);
+        	writeFuture.addListener(new IoFutureListener<WriteFuture>() {
+
+				@Override
+				public void operationComplete(WriteFuture arg0) {
+					// TODO Auto-generated method stub
+					if(arg0.isDone()&&!arg0.isWritten()){
+						LogUtils.DT("session:"+session.getId()+" 回复心跳包失败");
+					}
+				}
+			});
 //        	LogUtils.DT(session.getId()+" 收到服务器心跳包");
         }else {
             super.messageReceived(nextFilter, session, message);
@@ -47,7 +59,7 @@ public class ServerKeepAliveFilter extends IoFilterAdapter{
         }else if(status==IdleStatus.READER_IDLE&&session.getIdleCount(IdleStatus.READER_IDLE)== Constants.READ_IDLE_CLOSE_TIMES){
             //READ_IDLE_CLOSE_TIMES次Read空闲就关闭session
             session.closeOnFlush();
-            System.out.println("服务端 : "+session.getId()+" 未收到服务器心跳包，主动关闭");
+            System.out.println("服务端 : "+session.getId()+" 未收到客户端心跳包，主动关闭");
         }else{
             nextFilter.sessionIdle(session,status);
         }
